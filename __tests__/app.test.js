@@ -63,5 +63,23 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
+
+    test ('returns yelp data', async() => {
+
+      const expectation = {
+        'image_url': expect.any(String),
+        'name': expect.any(String),
+        'rating': expect.any(Number),
+        'url': expect.any(String),
+        'price': expect.any(String)
+      };
+
+      const data = await fakeRequest(app)
+        .get('/reviews/?latitude=40.7128&longitude=74.0060')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toContainEqual(expectation);
+    });
   });
 });
